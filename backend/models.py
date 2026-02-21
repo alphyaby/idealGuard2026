@@ -1,25 +1,29 @@
-from sqlalchemy import Column, Integer, String, Float, DateTime
+# models.py
+from sqlalchemy import Column, Integer, String, DateTime
 from datetime import datetime
 from database import Base
+
 
 class System(Base):
     __tablename__ = "systems"
 
-    id = Column(String, primary_key=True)
-    lab = Column(String)
-    type = Column(String)  # PC | SERVER
-    cpu = Column(Float, default=0)
-    network = Column(Float, default=0)
-    state = Column(String, default="ACTIVE")
-    hourly_cost = Column(Float, default=6.5)
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, default="Idle Guardian Core")
     idle_ticks = Column(Integer, default=0)
+    last_active = Column(DateTime, default=datetime.utcnow)
+
 
 class ActionLog(Base):
-    __tablename__ = "action_log"
+    __tablename__ = "action_logs"
 
     id = Column(Integer, primary_key=True, index=True)
-    timestamp = Column(DateTime, default=datetime.utcnow)
-    system_id = Column(String)
     action = Column(String)
-    trigger = Column(String)
-    savings_rupees = Column(Float)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class AIThought(Base):
+    __tablename__ = "ai_thoughts"
+
+    id = Column(Integer, primary_key=True, index=True)
+    thought = Column(String)
+    created_at = Column(DateTime, default=datetime.utcnow)

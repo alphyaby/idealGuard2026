@@ -1,24 +1,28 @@
+# schemas.py
 from pydantic import BaseModel
 from datetime import datetime
 
-class SystemOut(BaseModel):
-    id: str
-    lab: str
-    type: str
-    cpu: float
-    network: float
-    state: str
-    hourly_cost: float
 
-    class Config:
-        orm_mode = True
+class SystemOut(BaseModel):
+    id: int
+    name: str
+    idle_ticks: int
+    last_active: datetime
+
+    model_config = {"from_attributes": True}
+
 
 class ActionLogOut(BaseModel):
-    timestamp: datetime
-    system_id: str
+    id: int
     action: str
-    trigger: str
-    savings_rupees: float
+    created_at: datetime
 
-    class Config:
-        orm_mode = True
+    model_config = {"from_attributes": True}
+
+
+class AIThoughtOut(BaseModel):
+    id: int
+    thought: str
+    created_at: datetime
+
+    model_config = {"from_attributes": True}
